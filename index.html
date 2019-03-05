@@ -9,23 +9,30 @@
 </head>
 <body>
 
-    <button onclick="ejecutarAjax()" class="btn btn-outline-primary">Hola</button>
+    <button onclick="ejecutarAjax()" class="btn btn-outline-primary">Mostrar</button>
     <div id="info"></div>
 
     <script>
+        var resultado = document.getElementById("info");
+
         function ejecutarAjax(){
-            var ajaxRequest ;
-                ajaxRequest = new XMLHttpRequest();
-            
-                ajaxRequest.onreadystatechange = function(){
-                    if(ajaxRequest.readyState == 4 && ajaxRequest.status == 200){
-                    document.getElementById("info").innerHTML = ajaxRequest.responseText;
+            var xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+                if(xmlhttp.readyState === 4 && xmlhttp.status === 200){
+                    var data = JSON.parse(xmlhttp.responseText);
+                    console.log(data);
+                   if(resultado.innerHTML === ""){
+                            for(var i in data){
+                                resultado.innerHTML += i +": "+data[i]+"</br>";
+                            }
                     }
                 }
-
-                ajaxRequest.open("GET","documento.txt",true);
-                ajaxRequest.send();
             }
+
+            xmlhttp.open("GET","data.json",true);
+            xmlhttp.send();
+        }
     </script>
 
 
