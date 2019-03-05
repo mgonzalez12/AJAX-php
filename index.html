@@ -21,10 +21,10 @@
             xmlhttp.onreadystatechange = function() {
                 if(xmlhttp.readyState === 4 && xmlhttp.status === 200){
                     var data = JSON.parse(xmlhttp.responseText);
-                    console.log(data);
+                   // console.log(data);
                    if(resultado.innerHTML === ""){
                             for(var i in data){
-                                resultado.innerHTML += i +": "+data[i]+"</br>";
+                                resultado.innerHTML += data[i].nombre +"<hr/>";
                             }
                     }
                 }
