@@ -9,29 +9,33 @@
 </head>
 <body>
 
-    <button onclick="ejecutarAjax()" class="btn btn-outline-primary">Mostrar</button>
+    Nombre:<input type="text" id="nombre"> <br>
+    Apellido: <input type="text" id="apellido"> <br>
+    <button onclick="ejecutarAjax()" class="btn btn-outline-primary" value="Enviar">Enviar</button>
     <div id="info"></div>
 
     <script>
         var resultado = document.getElementById("info");
 
         function ejecutarAjax(){
-            var xmlhttp = new XMLHttpRequest();
+          var xmlhttp;
 
-            xmlhttp.onreadystatechange = function() {
-                if(xmlhttp.readyState === 4 && xmlhttp.status === 200){
-                    var data = JSON.parse(xmlhttp.responseText);
-                   // console.log(data);
-                   if(resultado.innerHTML === ""){
-                            for(var i in data){
-                                resultado.innerHTML += data[i].nombre +"<hr/>";
-                            }
-                    }
-                }
-            }
+          xmlhttp = new XMLHttpRequest();
 
-            xmlhttp.open("GET","data.json",true);
-            xmlhttp.send();
+          var a = document.getElementById("nombre").value;
+          var b = document.getElementById("apellido").value;
+          var informacionDelUsuario = "nombre="+a+"&apellido="+b;
+
+          xmlhttp.onreadystatechange = function() {
+              if(xmlhttp.readyState === 4 && xmlhttp.status === 200){
+                  var mensaje = xmlhttp.responseText;
+                  resultado.innerHTML = mensaje;
+              }
+          }
+
+          xmlhttp.open("POST","servidor.php",true);
+          xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+          xmlhttp.send(informacionDelUsuario);
         }
     </script>
 
